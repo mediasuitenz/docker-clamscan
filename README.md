@@ -9,15 +9,16 @@ Configuration is done via environment variables, so that users of the image can 
 
 Options are:
 
-* `SCAN_DIR`: path to the folder that should be scanned. This folder will get mounted into the container at runtime.
+* `SCAN_DIR`: path to the folder(s) that should be scanned. This folder should be mounted into the container at runtime (using -v option for docker run).
 * `CONTAINMENT_DIR`: path to the folder that infected files will be moved to.
+* `DEFINITIONS_DIR`: path to the folder that the current virus definitions will be stored. This will get created on the mounted volume if it does not already exist.
 
 ## Example Usage
 ```
 docker build -t clamscan .
-docker run -e SCAN_DIR="/files" -e CONTAINMENT_DIR="/virus" -v $PWD/files:/files clamscan
+docker run -e SCAN_DIR="/files/resources /files/uploads" -e CONTAINMENT_DIR="/clamav/quarantine" -e DEFINITIONS_DIR="/clamav/definitions -v $PWD/files:/files -v $PWD/clamav:clamav clamscan
 ```
-This example mounts an external volume in at `/files` on the container, and tells `clamscan` to scan that folder. The containment directory is inside the container in this example (scan.sh will create the containment dir if it doesn't already exist). This path could be to another mounted volume instead if you wanted to keep the virus files on the host for easier access.
+This example mounts an external volume in at `/files` on the container, and tells `clamscan` to scan two subfolders (`/files/resources` and `/files/uploads`). Another folder, `clamav` is mounted and any files that fail scanning are placed in `/clamav/quarantine`. Any definitions updates will store info into `/clamav/definitions`, making the update process quicker if there are no new definitions.
 
 ## Logging
 The container will log the scan output when running, so you may leverage this to set up notifications or whatever you need when infections are found.
