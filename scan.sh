@@ -2,9 +2,11 @@
 
 set -u
 
-# Create virus containment and definitions directory if it doesn't already exist
+# Create directory paths if they don't already exist
 mkdir -p ${CONTAINMENT_DIR}
+mkdir -p ${SCAN_DIR}
 mkdir -p ${DEFINITIONS_DIR}
+# clamav user must be owner to write definitions cache
 chown clamav:clamav ${DEFINITIONS_DIR}
 
 echo -e "Updating virus definitions before scanning ${SCAN_DIR}\n"
