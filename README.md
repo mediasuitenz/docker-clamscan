@@ -1,4 +1,4 @@
-# docker-clamav
+# docker-clamscan
 
 ## Intention
 This project intends to provide a configurable clamav image so that it can be used to scan a folder for viruses.
