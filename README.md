@@ -16,7 +16,7 @@ Options are:
 ## Example Usage
 ```
 docker build -t clamscan .
-docker run -e SCAN_DIR="/files/resources /files/uploads" -e CONTAINMENT_DIR="/clamav/quarantine" -e DEFINITIONS_DIR="/clamav/definitions -v $PWD/files:/files -v $PWD/clamav:clamav clamscan
+docker run -e SCAN_DIR="/files/resources /files/uploads" -e CONTAINMENT_DIR="/clamav/quarantine" -e DEFINITIONS_DIR="/clamav/definitions" -v $PWD/files:/files -v $PWD/clamav:clamav clamscan
 ```
 This example mounts an external volume in at `/files` on the container, and tells `clamscan` to scan two subfolders (`/files/resources` and `/files/uploads`). Another folder, `clamav` is mounted and any files that fail scanning are placed in `/clamav/quarantine`. Any definitions updates will store info into `/clamav/definitions`, making the update process quicker if there are no new definitions.
 
